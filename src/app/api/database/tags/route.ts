@@ -1,11 +1,8 @@
 import { MultiSelectPropResponse } from "@/types/notion-api";
-import { Client } from "@notionhq/client";
+import { notion } from "../../notionClient";
 
 export async function GET(request: Request) {
   try {
-    console.log("GET");
-    const notion = new Client({ auth: process.env.NOTION_TOKEN });
-
     const databaseId = process.env.NEXT_PUBLIC_NOTION_DATABASE_ID;
     if (!databaseId) {
       throw new Error("Database ID is not defined");
