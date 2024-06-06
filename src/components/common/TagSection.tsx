@@ -1,18 +1,34 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import HeaderTextSmall from "./HeaderTextSmall";
 import Tag from "./Tag";
+import { TagColor } from "@/types/TagColor";
 
 function TagSection() {
+  const [tags, setTags] = useState<
+    { name: string; color: TagColor }[] | null
+  >();
+
+  useEffect(() => {
+    const fetchTags = async () => {
+      const response = await fetch("/api/database/tags", { method: "GET" });
+      const json = await response.json();
+      setTags(json);
+    };
+    fetchTags();
+  }, []);
+
   return (
     <div>
       <HeaderTextSmall>🏷️ Tags</HeaderTextSmall>
       <div className="mt-2 flex flex-wrap gap-2">
-        <Tag color="default">React</Tag>
-        <Tag color="default">tailwindcss</Tag>
-        <Tag color="default">Javascript</Tag>
-        <Tag color="default">Next.js</Tag>
-        <Tag color="default">TypeScript</Tag>
-        <Tag color="default">Frontend</Tag>
-        <Tag color="default">OS</Tag>
+        {tags &&
+          tags.map((tag) => (
+            <Tag key={tag.name} color={tag.color}>
+              {tag.name}
+            </Tag>
+          ))}
       </div>
     </div>
   );
