@@ -14,7 +14,7 @@ export async function POST(request: Request) {
 
     const { results } = await notion.databases.query({
       database_id: databaseId,
-      page_size: 100,
+      page_size: 2,
       filter: {
         property: "분류",
         status: {

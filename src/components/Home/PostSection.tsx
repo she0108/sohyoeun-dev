@@ -20,10 +20,10 @@ function PostSection() {
         postElements.push(
           <div className="w-full h-min bg-neutral-100 rounded-3xl px-6 py-5">
             <h3 className="text-xl font-medium mb-1.5">{post.title}</h3>
-            <p className="text-base font-normal text-neutral-500 mb-2">
+            <p className="text-base font-normal text-neutral-500 mb-3">
               {post.description}
             </p>
-            <div className="flex gap-2">
+            <div className="flex flex-row items-center gap-3">
               <span className="text-sm text-neutral-400 mr-2">
                 {formatDate(post.date)}
               </span>
