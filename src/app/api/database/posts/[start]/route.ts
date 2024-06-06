@@ -1,30 +1,37 @@
 import { MultiSelectPropResponse, PageObject } from "@/types/notion-api";
-import { notion } from "../../notionClient";
+import { notion } from "../../../notionClient";
 
 // export async function GET(request: Request) {}
 
 // export async function HEAD(request: Request) {}
 
-export async function POST(request: Request) {
+export async function POST(
+  request: Request,
+  { params }: { params: { start: string } }
+) {
   try {
     const databaseId = process.env.NEXT_PUBLIC_NOTION_DATABASE_ID;
     if (!databaseId) {
       throw new Error("Database ID is not defined");
     }
 
-    const { results } = await notion.databases.query({
+    const startCursor = params.start;
+
+    const response = await notion.databases.query({
       database_id: databaseId,
-      page_size: 2,
+      page_size: 10,
       filter: {
         property: "분류",
         status: {
           equals: "post",
         },
       },
-      start_cursor: undefined,
+      start_cursor: startCursor === "0" ? undefined : startCursor,
     });
 
-    const pages = results as PageObject[];
+    const nextCursor = response.next_cursor;
+
+    const pages = response.results as PageObject[];
 
     const posts = pages.map((post) => ({
       id: post.id,
@@ -34,7 +41,7 @@ export async function POST(request: Request) {
       tags: post.properties.태그.multi_select,
     }));
 
-    return Response.json(posts);
+    return Response.json({ posts, nextCursor });
   } catch (error) {
     return Response.json(error);
   }

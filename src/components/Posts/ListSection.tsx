@@ -1,60 +1,66 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import HeaderTextLarge from "../common/HeaderTextLarge";
 import Tag from "../common/Tag";
+import { TagColor } from "@/types/TagColor";
+import { formatDate } from "@/lib/utils";
 
 function ListSection() {
+  const [posts, setPosts] = useState<React.ReactElement[]>([]);
+  const [nextCursor, setNextCursor] = useState<string | null>("0");
+
+  const fetchPosts = async () => {
+    const response = await fetch(`/api/database/posts/${nextCursor}`, {
+      method: "POST",
+    });
+    const json = await response.json();
+
+    setNextCursor(json.nextCursor);
+
+    const postObjects = json.posts;
+    const postElements = [...posts];
+    for (let post of postObjects) {
+      postElements.push(
+        <div className="w-full h-min bg-neutral-100 rounded-3xl px-6 py-5">
+          <h3 className="text-xl font-medium mb-1.5">{post.title}</h3>
+          <p className="text-base font-normal text-neutral-500 mb-3">
+            {post.description}
+          </p>
+          <div className="flex flex-row items-center gap-3">
+            <span className="text-sm text-neutral-400 mr-2">
+              {formatDate(post.date)}
+            </span>
+            {post.tags.map(
+              (tag: { id: string; name: string; color: TagColor }) => (
+                <Tag key={tag.name} color={tag.color}>
+                  {tag.name}
+                </Tag>
+              )
+            )}
+          </div>
+        </div>
+      );
+    }
+    setPosts(postElements);
+  };
+
+  useEffect(() => {
+    fetchPosts();
+  }, [fetch]);
+
   return (
     <div>
       <HeaderTextLarge>📂 Posts</HeaderTextLarge>
-      <div className="flex flex-col gap-5 mt-3">
-        <div className="w-full h-min bg-neutral-100 rounded-3xl p-6">
-          <h3 className="text-xl font-medium mb-1">
-            React(+Vite)에 TailwindCSS 더하기
-          </h3>
-          <p className="text-base font-normal text-neutral-500 mb-2">
-            요즘 사람들이 가장 많이 사용하는 CSS 프레임워크, 설치부터 활용까지
-            모두 알아보자
-          </p>
-          <div className="flex gap-2">
-            <span className="text-sm text-neutral-400 mr-2">
-              2024년 6월 5일
-            </span>
-            <Tag color="default">React</Tag>
-            <Tag color="default">tailwindcss</Tag>
-          </div>
-        </div>
-        <div className="w-full h-min bg-neutral-100 rounded-3xl p-6">
-          <h3 className="text-xl font-medium mb-1">
-            React(+Vite)에 TailwindCSS 더하기
-          </h3>
-          <p className="text-base font-normal text-neutral-500 mb-2">
-            요즘 사람들이 가장 많이 사용하는 CSS 프레임워크, 설치부터 활용까지
-            모두 알아보자
-          </p>
-          <div className="flex gap-2">
-            <span className="text-sm text-neutral-400 mr-2">
-              2024년 6월 5일
-            </span>
-            <Tag color="default">React</Tag>
-            <Tag color="default">tailwindcss</Tag>
-          </div>
-        </div>
-        <div className="w-full h-min bg-neutral-100 rounded-3xl p-6">
-          <h3 className="text-xl font-medium mb-1">
-            React(+Vite)에 TailwindCSS 더하기
-          </h3>
-          <p className="text-base font-normal text-neutral-500 mb-2">
-            요즘 사람들이 가장 많이 사용하는 CSS 프레임워크, 설치부터 활용까지
-            모두 알아보자
-          </p>
-          <div className="flex gap-2">
-            <span className="text-sm text-neutral-400 mr-2">
-              2024년 6월 5일
-            </span>
-            <Tag color="default">React</Tag>
-            <Tag color="default">tailwindcss</Tag>
-          </div>
-        </div>
-      </div>
+      <div className="flex flex-col gap-5 mt-3 h-4/5">{posts}</div>
+      {nextCursor && (
+        <button
+          onClick={fetchPosts}
+          className="text-sm text-neutral-400 bg-white hover:bg-neutral-100 min-w-max w-min h-min px-1.5 py-0.5 rounded-lg"
+        >
+          more
+        </button>
+      )}
     </div>
   );
 }
