@@ -47,7 +47,7 @@ function ListSection() {
 
   useEffect(() => {
     fetchPosts();
-  }, [fetch]);
+  }, []);
 
   return (
     <div>

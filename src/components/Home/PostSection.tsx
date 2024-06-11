@@ -18,7 +18,7 @@ function PostSection() {
       const postElements: React.ReactElement[] = [];
       for (let post of postObjects) {
         postElements.push(
-          <div className="w-full h-min bg-neutral-100 rounded-3xl px-6 py-5">
+          <div className="w-full h-min bg-neutral-100 hover:bg-neutral-200/60 rounded-3xl px-6 py-5">
             <h3 className="text-xl font-medium mb-1.5">{post.title}</h3>
             <p className="text-base font-normal text-neutral-500 mb-3">
               {post.description}
