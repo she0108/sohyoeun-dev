@@ -7,13 +7,13 @@ import TagSection from "@/components/common/TagSection";
 
 export default function Home() {
   return (
-    <main className="w-[1080px] h-full mx-auto my-20 grid grid-cols-3 gap-10">
-      <div className="flex flex-col gap-6">
+    <main className="w-[1080px] h-full mx-auto my-20 grid grid-cols-7 gap-10">
+      <div className="col-span-2 flex flex-col gap-6">
         <ProfileSection />
         <SearchSection />
         <TagSection />
       </div>
-      <div className="col-span-2 flex flex-col gap-8 overflow-y-auto">
+      <div className="col-span-5 flex flex-col gap-8 overflow-y-auto">
         <AboutSection />
         <ProjectSection />
         <PostSection />
