@@ -5,6 +5,7 @@ import HeaderTextLarge from "../common/HeaderTextLarge";
 import Tag from "../common/Tag";
 import { TagColor } from "@/types/TagColor";
 import { formatDate } from "@/lib/utils";
+import Link from "next/link";
 
 function ListSection() {
   const [posts, setPosts] = useState<React.ReactElement[]>([]);
@@ -22,24 +23,26 @@ function ListSection() {
     const postElements = [...posts];
     for (let post of postObjects) {
       postElements.push(
-        <div className="w-full h-min bg-neutral-100 rounded-3xl px-6 py-5">
-          <h3 className="text-xl font-medium mb-1.5">{post.title}</h3>
-          <p className="text-base font-normal text-neutral-500 mb-3">
-            {post.description}
-          </p>
-          <div className="flex flex-row items-center gap-3">
-            <span className="text-sm text-neutral-400 mr-2">
-              {formatDate(post.date)}
-            </span>
-            {post.tags.map(
-              (tag: { id: string; name: string; color: TagColor }) => (
-                <Tag key={tag.name} color={tag.color}>
-                  {tag.name}
-                </Tag>
-              )
-            )}
+        <Link href={`/posts/${post.id}`}>
+          <div className="w-full h-min bg-neutral-100 hover:bg-neutral-200/60 rounded-3xl px-6 py-5">
+            <h3 className="text-xl font-medium mb-1.5">{post.title}</h3>
+            <p className="text-base font-normal text-neutral-500 mb-3">
+              {post.description}
+            </p>
+            <div className="flex flex-row items-center gap-3">
+              <span className="text-sm text-neutral-400 mr-2">
+                {formatDate(post.date)}
+              </span>
+              {post.tags.map(
+                (tag: { id: string; name: string; color: TagColor }) => (
+                  <Tag key={tag.name} color={tag.color}>
+                    {tag.name}
+                  </Tag>
+                )
+              )}
+            </div>
           </div>
-        </div>
+        </Link>
       );
     }
     setPosts(postElements);
