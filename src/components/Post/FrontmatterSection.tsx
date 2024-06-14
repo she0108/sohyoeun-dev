@@ -35,7 +35,7 @@ function FrontmatterSection({ pageId }: FrontmatterSectionProps) {
 
   return (
     <div className="flex flex-col gap-2">
-      <h1 className="text-4xl font-extrabold">{props && props.title}</h1>
+      <h1 className="text-5xl font-extrabold">{props && props.title}</h1>
       <div className="flex items-center gap-3 my-4">
         <Avatar size={24} />
         <span className="font-medium">sohyoeun</span>

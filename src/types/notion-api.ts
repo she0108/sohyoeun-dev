@@ -1,3 +1,4 @@
+import { BlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import { TagColor } from "./TagColor";
 
 export interface MultiSelectPropResponse {
@@ -53,3 +54,27 @@ export type PropsObject = {
 };
 
 export type PostInfoObject = {};
+
+export type BulletedListBlockObjectResponse = {
+  id: string;
+  type: "bulleted_list";
+  bulleted_list: {
+    children: BlockWithChildren[];
+  };
+};
+
+export type NumberedListBlockObjectResponse = {
+  id: string;
+  type: "numbered_list";
+  numbered_list: {
+    children: BlockWithChildren[];
+  };
+};
+
+export type BlockWithChildren = (
+  | BlockObjectResponse
+  | BulletedListBlockObjectResponse
+  | NumberedListBlockObjectResponse
+) & {
+  children?: BlockObjectResponse[];
+};
