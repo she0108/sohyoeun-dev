@@ -1,17 +1,25 @@
 import { BlockWithChildren } from "@/types/notion-api";
-import { ParagraphBlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import {
+  BlockObjectResponse,
+  BulletedListItemBlockObjectResponse,
+  NumberedListItemBlockObjectResponse,
+  RichTextItemResponse,
+} from "@notionhq/client/build/src/api-endpoints";
+import Renderer from "../Renderer";
 
-interface ParagraphBlockProps {
-  children: ParagraphBlockObjectResponse;
+interface ListItemBlockProps {
+  children: BlockWithChildren;
 }
 
-export default function ParagraphBlock({ children }: ParagraphBlockProps) {
-  const blockType = children.type;
-  if (blockType !== "paragraph") {
-    console.log(`${children} is not a paragraph block`);
-    return <></>;
+export default function ListItemBlock({ children }: ListItemBlockProps) {
+  let richText: RichTextItemResponse[] = [];
+  switch (children.type) {
+    case "bulleted_list_item":
+      richText = children.bulleted_list_item.rich_text;
+      break;
+    case "numbered_list_item":
+      richText = children.numbered_list_item.rich_text;
   }
-  const richText = children[blockType].rich_text;
   const block = [];
   for (let text of richText) {
     const annotations = text.annotations;
@@ -92,5 +100,25 @@ export default function ParagraphBlock({ children }: ParagraphBlockProps) {
     }
   }
 
-  return <p className="text-lg mt-3">{block}</p>;
+  return (
+    <li className="text-lg mt-3">
+      {block}
+      {children.children && renderNestedList(children)}
+    </li>
+  );
+}
+
+function renderNestedList(parent: BlockWithChildren) {
+  const children = parent.children;
+  if (!children) return null;
+
+  if (children[0].type === "bulleted_list_item") {
+    return (
+      <ul>
+        {children.map((block, index) => (
+          <Renderer key={index} block={block} />
+        ))}
+      </ul>
+    );
+  }
 }

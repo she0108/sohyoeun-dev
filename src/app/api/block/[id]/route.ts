@@ -17,8 +17,14 @@ export async function GET(
       throw new Error("Page ID is not defined");
     }
 
-    // recursive
+    const fetchedBlockIds = new Set<string>();
+
     const getBlocks = async (blockId: string): Promise<BlockWithChildren[]> => {
+      if (fetchedBlockIds.has(blockId)) {
+        return [];
+      }
+      fetchedBlockIds.add(blockId);
+
       const { results } = await notion.blocks.children.list({
         block_id: blockId,
         page_size: 100,

@@ -25,7 +25,7 @@ function ContentSection({ pageId }: ContentSectionProps) {
     };
     fetchBlocks();
   });
-  return <div>{notionBlocks}</div>;
+  return <div className="flex flex-col gap-2">{notionBlocks}</div>;
 }
 
 export default ContentSection;
