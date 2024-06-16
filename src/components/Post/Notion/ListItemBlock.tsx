@@ -121,4 +121,11 @@ function renderNestedList(parent: BlockWithChildren) {
       </ul>
     );
   }
+  return (
+    <ol>
+      {children.map((block, index) => (
+        <Renderer key={index} block={block} />
+      ))}
+    </ol>
+  );
 }

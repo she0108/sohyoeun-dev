@@ -24,7 +24,7 @@ function ContentSection({ pageId }: ContentSectionProps) {
       setNotionBlocks(blocks);
     };
     fetchBlocks();
-  });
+  }, [pageId]);
   return <div className="flex flex-col gap-2">{notionBlocks}</div>;
 }
 

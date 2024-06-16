@@ -25,57 +25,57 @@ export default function ParagraphBlock({ children }: ParagraphBlockProps) {
         color = "text-blue-500";
         break;
       case "blue_background":
-        color = "bg-blue-200";
+        color = "bg-blue-100";
         break;
       case "brown":
         color = "text-brown-500";
         break;
       case "brown_background":
-        color = "bg-brown-200";
+        color = "bg-brown-100";
         break;
       case "gray":
         color = "text-gray-500";
         break;
       case "gray_background":
-        color = "bg-gray-200";
+        color = "bg-gray-100";
         break;
       case "green":
         color = "text-green-500";
         break;
       case "green_background":
-        color = "bg-green-200";
+        color = "bg-green-100";
         break;
       case "orange":
         color = "text-orange-500";
         break;
       case "orange_background":
-        color = "bg-orange-200";
+        color = "bg-orange-100";
         break;
       case "yellow":
         color = "text-yellow-500";
         break;
       case "yellow_background":
-        color = "bg-yellow-200";
+        color = "bg-yellow-100";
         break;
       case "pink":
         color = "text-pink-500";
         break;
       case "pink_background":
-        color = "bg-pink-200";
+        color = "bg-pink-100";
         break;
       case "purple":
         color = "text-purple-500";
         break;
       case "purple_background":
-        color = "bg-purple-200";
+        color = "bg-purple-100";
         break;
       case "red":
         color = "text-red-500";
         break;
       case "red_background":
-        color = "bg-red-200";
+        color = "bg-red-100";
     }
-    let className = `${bold} ${italic} ${strikethrough} ${underline} ${color} whitespace-pre-wrap rounded`;
+    let className = `${bold} ${italic} ${strikethrough} ${underline} ${color} whitespace-pre-wrap rounded-sm`;
     if (annotations.code) {
       className += " bg-neutral-100 text-neutral-700 rounded-lg px-1 -mx-1";
       block.push(
