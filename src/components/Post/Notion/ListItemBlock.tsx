@@ -1,10 +1,5 @@
 import { BlockWithChildren } from "@/types/notion-api";
-import {
-  BlockObjectResponse,
-  BulletedListItemBlockObjectResponse,
-  NumberedListItemBlockObjectResponse,
-  RichTextItemResponse,
-} from "@notionhq/client/build/src/api-endpoints";
+import { RichTextItemResponse } from "@notionhq/client/build/src/api-endpoints";
 import Renderer from "../Renderer";
 
 interface ListItemBlockProps {

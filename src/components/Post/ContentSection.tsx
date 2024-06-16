@@ -2,7 +2,6 @@
 
 import { BlockWithChildren } from "@/types/notion-api";
 import { ReactElement, useEffect, useState } from "react";
-import ParagraphBlock from "./Notion/ParagraphBlock";
 import Renderer from "./Renderer";
 
 interface ContentSectionProps {

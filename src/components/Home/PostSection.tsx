@@ -4,7 +4,7 @@ import HeaderTextLarge from "../common/HeaderTextLarge";
 import Tag from "../common/Tag";
 import RouterButton from "../common/RouterButton";
 import { useEffect, useState } from "react";
-import { TagColor } from "@/types/TagColor";
+import { TagColor } from "@/types/notion-color";
 import { formatDate } from "@/lib/utils";
 import Link from "next/link";
 

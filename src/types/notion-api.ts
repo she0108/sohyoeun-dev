@@ -1,5 +1,5 @@
 import { BlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
-import { TagColor } from "./TagColor";
+import { TagColor } from "./notion-color";
 
 export interface MultiSelectPropResponse {
   id: string;

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import HeaderTextSmall from "./HeaderTextSmall";
 import Tag from "./Tag";
-import { TagColor } from "@/types/TagColor";
+import { TagColor } from "@/types/notion-color";
 
 function TagSection() {
   const [tags, setTags] = useState<

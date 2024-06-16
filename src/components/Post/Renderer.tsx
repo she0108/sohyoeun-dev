@@ -6,6 +6,7 @@ import CodeBlock from "./Notion/CodeBlock";
 import BulletedListBlock from "./Notion/BulletedListBlock";
 import NumberedListBlock from "./Notion/NumberedListBlock";
 import ListItemBlock from "./Notion/ListItemBlock";
+import CalloutBlock from "./Notion/CalloutBlock";
 
 interface RendererProps {
   block: BlockWithChildren;
@@ -30,6 +31,8 @@ function Renderer({ block }: RendererProps) {
     case "bulleted_list_item":
     case "numbered_list_item":
       return <ListItemBlock>{block}</ListItemBlock>;
+    case "callout":
+      return <CalloutBlock>{block}</CalloutBlock>;
   }
   return <></>;
 }

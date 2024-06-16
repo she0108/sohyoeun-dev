@@ -1,4 +1,4 @@
-import { TagColor } from "../../types/TagColor";
+import { TagColor } from "../../types/notion-color";
 
 interface TagProps {
   children: string;

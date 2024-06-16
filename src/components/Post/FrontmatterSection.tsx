@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Avatar from "../common/Avatar";
-import { TagColor } from "@/types/TagColor";
+import { TagColor } from "@/types/notion-color";
 import Tag from "../common/Tag";
 import { formatDate } from "@/lib/utils";
 

@@ -1,4 +1,3 @@
-import { BlockWithChildren } from "@/types/notion-api";
 import { ParagraphBlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 
 interface ParagraphBlockProps {
