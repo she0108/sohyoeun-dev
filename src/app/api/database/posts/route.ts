@@ -1,4 +1,4 @@
-import { MultiSelectPropResponse, PageObject } from "@/types/notion-api";
+import { PageObject } from "@/types/notion-api";
 import { notion } from "../../notionClient";
 
 // export async function GET(request: Request) {}

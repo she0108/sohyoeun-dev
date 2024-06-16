@@ -1,6 +1,6 @@
 import { PageObject } from "@/types/notion-api";
 import { notion } from "../../notionClient";
-import { TagColor } from "@/types/TagColor";
+import { TagColor } from "@/types/notion-color";
 
 export async function GET(
   request: Request,
