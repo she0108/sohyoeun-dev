@@ -3,6 +3,8 @@ import RouterButton from "@/components/common/RouterButton";
 import SearchSection from "@/components/common/SearchSection";
 import TagSection from "@/components/common/TagSection";
 
+export const dynamic = "force-dynamic";
+
 function PostListPage() {
   return (
     <div className="w-dvw h-dvh bg-white flex">
