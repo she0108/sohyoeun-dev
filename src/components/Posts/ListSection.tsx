@@ -7,14 +7,21 @@ import { TagColor } from "@/types/notion-color";
 import { formatDate } from "@/lib/utils";
 import Link from "next/link";
 
-function ListSection() {
+interface ListSectionProps {
+  query: string | undefined;
+}
+
+function ListSection({ query }: ListSectionProps) {
   const [posts, setPosts] = useState<React.ReactElement[]>([]);
-  const [nextCursor, setNextCursor] = useState<string | null>("0");
+  const [nextCursor, setNextCursor] = useState<string | null>(null);
 
   const fetchPosts = async () => {
-    const response = await fetch(`/api/database/posts/${nextCursor}`, {
-      method: "POST",
-    });
+    const response = await fetch(
+      `/api/database/posts?query=${query}&start=${nextCursor}`,
+      {
+        method: "POST",
+      }
+    );
     const json = await response.json();
 
     setNextCursor(json.nextCursor);
@@ -23,7 +30,7 @@ function ListSection() {
     const postElements = [...posts];
     for (let post of postObjects) {
       postElements.push(
-        <Link href={`/posts/${post.id}`}>
+        <Link href={`/posts/${post.id}`} key={post.id}>
           <div className="w-full h-min bg-neutral-100 hover:bg-neutral-200/60 rounded-3xl px-6 py-5">
             <h3 className="text-xl font-medium mb-1.5">{post.title}</h3>
             <p className="text-base font-normal text-neutral-500 mb-3">
@@ -53,15 +60,15 @@ function ListSection() {
   }, []);
 
   return (
-    <div>
-      <HeaderTextLarge>📂 Posts</HeaderTextLarge>
+    <div className="flex flex-col">
+      <HeaderTextLarge>📂 Notes</HeaderTextLarge>
       <div className="flex flex-col gap-5 mt-3 h-4/5">{posts}</div>
       {nextCursor && (
         <button
           onClick={fetchPosts}
-          className="text-sm text-neutral-400 bg-white hover:bg-neutral-100 min-w-max w-min h-min px-1.5 py-0.5 rounded-lg"
+          className="text-sm text-neutral-400 bg-white hover:bg-neutral-100 min-w-max w-min h-min px-1.5 py-0.5 mt-20 mx-auto rounded-lg"
         >
-          more
+          load more ↓
         </button>
       )}
     </div>

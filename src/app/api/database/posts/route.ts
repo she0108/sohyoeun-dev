@@ -1,28 +1,58 @@
 import { PageObject } from "@/types/notion-api";
 import { notion } from "../../notionClient";
+import { NextRequest } from "next/server";
 
 // export async function GET(request: Request) {}
 
 // export async function HEAD(request: Request) {}
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     const databaseId = process.env.NEXT_PUBLIC_NOTION_DATABASE_ID;
     if (!databaseId) {
       throw new Error("Database ID is not defined");
     }
 
-    const { results } = await notion.databases.query({
+    const searchParams = request.nextUrl.searchParams;
+
+    const size = searchParams.get("size");
+
+    const query = searchParams.get("query");
+    console.log(query);
+    const filter = query
+      ? {
+          and: [
+            {
+              property: "분류",
+              status: {
+                equals: "post",
+              },
+            },
+            {
+              property: "제목",
+              rich_text: {
+                contains: query,
+              },
+            },
+          ],
+        }
+      : {
+          property: "분류",
+          status: {
+            equals: "post",
+          },
+        };
+
+    const start = searchParams.get("start");
+    const startCursor = !start || start == "null" ? undefined : start;
+    const { results, next_cursor } = await notion.databases.query({
       database_id: databaseId,
-      page_size: 2,
-      filter: {
-        property: "분류",
-        status: {
-          equals: "post",
-        },
-      },
-      start_cursor: undefined,
+      page_size: size ? parseInt(size) : 5,
+      filter: filter,
+      start_cursor: startCursor,
     });
+
+    const nextCursor = next_cursor;
 
     const pages = results as PageObject[];
 
@@ -34,7 +64,7 @@ export async function POST(request: Request) {
       tags: post.properties.태그.multi_select,
     }));
 
-    return Response.json(posts);
+    return Response.json({ posts, nextCursor });
   } catch (error) {
     return Response.json(error);
   }

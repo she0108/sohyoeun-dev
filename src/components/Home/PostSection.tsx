@@ -13,13 +13,17 @@ function PostSection() {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await fetch("/api/database/posts", { method: "POST" });
-      const postObjects = await response.json();
+      const response = await fetch("/api/database/posts?size=2", {
+        method: "POST",
+      });
+      const json = await response.json();
+
+      const postObjects = json.posts;
 
       const postElements: React.ReactElement[] = [];
       for (let post of postObjects) {
         postElements.push(
-          <Link href={`/posts/${post.id}`}>
+          <Link href={`/posts/${post.id}`} key={post.id}>
             <div className="w-full h-min bg-neutral-100 hover:bg-neutral-200/60 rounded-3xl px-6 py-5">
               <h3 className="text-xl font-medium mb-1.5">{post.title}</h3>
               <p className="text-base font-normal text-neutral-500 mb-3">
@@ -60,7 +64,7 @@ function PostSection() {
   return (
     <div>
       <div className="flex justify-between items-end">
-        <HeaderTextLarge>📂 Posts</HeaderTextLarge>
+        <HeaderTextLarge>📂 Notes</HeaderTextLarge>
         <RouterButton to="/posts">more -&gt;</RouterButton>
       </div>
       <div className="flex flex-col gap-5 mt-3">{posts ? posts : skeleton}</div>
