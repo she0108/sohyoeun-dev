@@ -18,7 +18,6 @@ export async function POST(request: NextRequest) {
     const size = searchParams.get("size");
 
     const query = searchParams.get("query");
-    console.log(query);
     const filter = query
       ? {
           and: [

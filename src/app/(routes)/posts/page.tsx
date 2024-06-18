@@ -13,7 +13,7 @@ function PostListPage() {
           <TagSection />
         </div>
         <div className="col-span-5 flex flex-col gap-8 py-20 overflow-y-scroll">
-          <ListSection query="" />
+          <ListSection />
         </div>
       </main>
     </div>
