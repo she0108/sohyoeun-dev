@@ -23,6 +23,8 @@ function ListSection() {
   const fetchPosts = async (reset: boolean) => {
     const response = await fetch(url, {
       method: "POST",
+      cache: "force-cache",
+      next: { revalidate: 3600 },
     });
 
     const json = await response.json();

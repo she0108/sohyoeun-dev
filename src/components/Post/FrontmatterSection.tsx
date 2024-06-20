@@ -26,7 +26,11 @@ function FrontmatterSection({ pageId }: FrontmatterSectionProps) {
 
   useEffect(() => {
     const fetchProps = async () => {
-      const response = await fetch(`/api/page/${pageId}`, { method: "GET" });
+      const response = await fetch(`/api/page/${pageId}`, {
+        method: "GET",
+        cache: "force-cache",
+        next: { revalidate: 3600 },
+      });
       const json = await response.json();
       setProps(json);
     };

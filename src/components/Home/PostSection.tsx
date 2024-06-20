@@ -15,6 +15,8 @@ function PostSection() {
     const fetchPosts = async () => {
       const response = await fetch("/api/database/posts?size=2", {
         method: "POST",
+        cache: "force-cache",
+        next: { revalidate: 3600 },
       });
       const json = await response.json();
 

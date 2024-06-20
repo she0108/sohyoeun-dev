@@ -13,7 +13,11 @@ function ContentSection({ pageId }: ContentSectionProps) {
 
   useEffect(() => {
     const fetchBlocks = async () => {
-      const response = await fetch(`/api/block/${pageId}`, { method: "GET" });
+      const response = await fetch(`/api/block/${pageId}`, {
+        method: "GET",
+        cache: "force-cache",
+        next: { revalidate: 3600 },
+      });
       const blockData = await response.json();
       const blocks: ReactElement[] = await blockData.map(
         (block: BlockWithChildren, index: number) => (

@@ -42,7 +42,11 @@ function TagSection() {
 
   useEffect(() => {
     const fetchTags = async () => {
-      const response = await fetch("/api/database/tags", { method: "GET" });
+      const response = await fetch("/api/database/tags", {
+        method: "GET",
+        cache: "force-cache",
+        next: { revalidate: 3600 },
+      });
       const json = await response.json();
       setTags(json);
     };
