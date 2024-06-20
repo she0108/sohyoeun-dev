@@ -20,7 +20,9 @@ export async function GET(request: Request) {
     }));
 
     return Response.json(tags);
-  } catch (error) {}
+  } catch (error) {
+    return Response.json(error);
+  }
 }
 
 // export async function HEAD(request: Request) {}
