@@ -1,7 +1,7 @@
 import { TagColor } from "../../types/notion-color";
 import useTagStore from "@/store/tagStore";
 
-interface TagProps {
+interface SelectedTagProps {
   children: string;
   color: TagColor;
 }
@@ -32,20 +32,14 @@ function colorToClassName(color: TagColor) {
   }
 }
 
-function Tag({ children, color }: TagProps) {
-  const { tag, setTag, resetTag } = useTagStore();
-
-  const handleClick = () => {
-    if (!tag || tag.name !== children) {
-      setTag({ name: children, color: color });
-    }
-  };
+function SelectedTag({ children, color }: SelectedTagProps) {
+  const { resetTag } = useTagStore();
 
   return (
-    <button className={colorToClassName(color)} onClick={handleClick}>
-      {children}
+    <button className={colorToClassName(color)} onClick={resetTag}>
+      {children} x
     </button>
   );
 }
 
-export default Tag;
+export default SelectedTag;

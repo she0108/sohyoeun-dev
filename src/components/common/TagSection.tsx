@@ -4,8 +4,11 @@ import { useEffect, useState } from "react";
 import HeaderTextSmall from "./HeaderTextSmall";
 import Tag from "./Tag";
 import { TagColor } from "@/types/notion-color";
+import useTagStore from "@/store/tagStore";
+import SelectedTag from "./SelectedTag";
 
 function TagSection() {
+  const { tag: selectedTag } = useTagStore();
   const [tags, setTags] = useState<
     { name: string; color: TagColor }[] | null
   >();
@@ -50,12 +53,21 @@ function TagSection() {
     <div>
       <HeaderTextSmall>🏷️ Tags</HeaderTextSmall>
       <div className="mt-2 flex flex-wrap gap-2">
+        {selectedTag && (
+          <SelectedTag color={selectedTag.color}>
+            {selectedTag.name}
+          </SelectedTag>
+        )}
         {tags
-          ? tags.map((tag) => (
-              <Tag key={tag.name} color={tag.color}>
-                {tag.name}
-              </Tag>
-            ))
+          ? tags
+              .filter((tag) =>
+                selectedTag ? tag.name !== selectedTag.name : true
+              )
+              .map((tag) => (
+                <Tag key={tag.name} color={tag.color}>
+                  {tag.name}
+                </Tag>
+              ))
           : skeleton}
       </div>
     </div>
