@@ -3,7 +3,7 @@ import { notion } from "../../notionClient";
 
 export async function GET(request: Request) {
   try {
-    const databaseId = process.env.NEXT_PUBLIC_NOTION_DATABASE_ID;
+    const databaseId = process.env.NEXT_PUBLIC_POST_DATABASE_ID;
     if (!databaseId) {
       throw new Error("Database ID is not defined");
     }

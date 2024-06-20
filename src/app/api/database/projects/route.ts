@@ -1,4 +1,4 @@
-import { PageObject } from "@/types/notion-api";
+import { ProjectPageObject } from "@/types/notion-api";
 import { notion } from "../../notionClient";
 import { NextRequest } from "next/server";
 
@@ -8,51 +8,20 @@ import { NextRequest } from "next/server";
 
 export async function POST(request: NextRequest) {
   try {
-    const databaseId = process.env.NEXT_PUBLIC_POST_DATABASE_ID;
+    const databaseId = process.env.NEXT_PUBLIC_PROJECT_DATABASE_ID;
     if (!databaseId) {
       throw new Error("Database ID is not defined");
     }
 
     const searchParams = request.nextUrl.searchParams;
-
     const size = searchParams.get("size");
-    const query = searchParams.get("query");
-    const tag = searchParams.get("tag");
 
-    let filter: any = {
-      property: "분류",
+    const filter = {
+      property: "상태",
       status: {
-        equals: "post",
+        equals: "공개",
       },
     };
-
-    if (query) {
-      filter = {
-        and: [
-          filter,
-          {
-            property: "제목",
-            rich_text: {
-              contains: query,
-            },
-          },
-        ],
-      };
-    }
-
-    if (tag) {
-      filter = {
-        and: [
-          filter,
-          {
-            property: "태그",
-            multi_select: {
-              contains: tag,
-            },
-          },
-        ],
-      };
-    }
 
     const start = searchParams.get("start");
     const startCursor = !start || start == "null" ? undefined : start;
@@ -63,16 +32,20 @@ export async function POST(request: NextRequest) {
       start_cursor: startCursor,
     });
 
-    const pages = results as PageObject[];
-    const posts = pages.map((post) => ({
-      id: post.id,
-      date: post.created_time,
-      title: post.properties.제목.title[0].plain_text,
-      description: post.properties.소개.rich_text[0].plain_text,
-      tags: post.properties.태그.multi_select,
+    const pages = results as ProjectPageObject[];
+
+    const projects = pages.map((project) => ({
+      id: project.id,
+      start: project.properties.기간.date.start,
+      end: project.properties.기간.date.end,
+      name: project.properties.이름.title[0].plain_text,
+      description1: project.properties.소개1.rich_text[0].plain_text,
+      description2: project.properties.소개2.rich_text[0].plain_text,
+      tags: project.properties.태그.multi_select,
+      thumbnail: project.properties.썸네일.files[0].file.url,
     }));
 
-    return Response.json({ posts, nextCursor });
+    return Response.json({ projects, nextCursor });
   } catch (error) {
     return Response.json(error);
   }

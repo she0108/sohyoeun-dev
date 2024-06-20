@@ -14,7 +14,7 @@ export default function Home() {
         <TagSection />
       </div>
       <div className="col-span-5 flex flex-col gap-8 overflow-y-auto">
-        <AboutSection />
+        {/* <AboutSection /> */}
         <ProjectSection />
         <PostSection />
       </div>
