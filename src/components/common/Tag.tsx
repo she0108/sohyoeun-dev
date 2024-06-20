@@ -1,3 +1,5 @@
+import { MouseEvent } from "react";
+import { useRouter } from "next/navigation";
 import { TagColor } from "../../types/notion-color";
 import useTagStore from "@/store/tagStore";
 
@@ -33,12 +35,15 @@ function colorToClassName(color: TagColor) {
 }
 
 function Tag({ children, color }: TagProps) {
-  const { tag, setTag, resetTag } = useTagStore();
+  const { tag, setTag } = useTagStore();
+  const router = useRouter();
 
-  const handleClick = () => {
+  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
     if (!tag || tag.name !== children) {
       setTag({ name: children, color: color });
+      router.push("/posts");
     }
+    e.preventDefault();
   };
 
   return (

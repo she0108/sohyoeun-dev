@@ -7,6 +7,33 @@ import { TagColor } from "@/types/notion-color";
 import useTagStore from "@/store/tagStore";
 import SelectedTag from "./SelectedTag";
 
+const skeleton = [
+  <div
+    key={0}
+    className="bg-neutral-200/60 hover:bg-neutral-200/90 text-neutral-900/80 w-16 h-6 rounded-md text-sm animate-pulse"
+  />,
+  <div
+    key={1}
+    className="bg-neutral-200/60 hover:bg-neutral-200/90 text-neutral-900/80 w-20 h-6 rounded-md text-sm animate-pulse"
+  />,
+  <div
+    key={2}
+    className="bg-neutral-200/60 hover:bg-neutral-200/90 text-neutral-900/80 w-24 h-6 rounded-md text-sm animate-pulse"
+  />,
+  <div
+    key={3}
+    className="bg-neutral-200/60 hover:bg-neutral-200/90 text-neutral-900/80 w-16 h-6 rounded-md text-sm animate-pulse"
+  />,
+  <div
+    key={4}
+    className="bg-neutral-200/60 hover:bg-neutral-200/90 text-neutral-900/80 w-24 h-6 rounded-md text-sm animate-pulse"
+  />,
+  <div
+    key={5}
+    className="bg-neutral-200/60 hover:bg-neutral-200/90 text-neutral-900/80 w-16 h-6 rounded-md text-sm animate-pulse"
+  />,
+];
+
 function TagSection() {
   const { tag: selectedTag } = useTagStore();
   const [tags, setTags] = useState<
@@ -21,33 +48,6 @@ function TagSection() {
     };
     fetchTags();
   }, []);
-
-  const skeleton = [
-    <div
-      key={0}
-      className="bg-neutral-200/60 hover:bg-neutral-200/90 text-neutral-900/80 w-16 h-6 rounded-md text-sm animate-pulse"
-    />,
-    <div
-      key={1}
-      className="bg-neutral-200/60 hover:bg-neutral-200/90 text-neutral-900/80 w-20 h-6 rounded-md text-sm animate-pulse"
-    />,
-    <div
-      key={2}
-      className="bg-neutral-200/60 hover:bg-neutral-200/90 text-neutral-900/80 w-24 h-6 rounded-md text-sm animate-pulse"
-    />,
-    <div
-      key={3}
-      className="bg-neutral-200/60 hover:bg-neutral-200/90 text-neutral-900/80 w-16 h-6 rounded-md text-sm animate-pulse"
-    />,
-    <div
-      key={4}
-      className="bg-neutral-200/60 hover:bg-neutral-200/90 text-neutral-900/80 w-24 h-6 rounded-md text-sm animate-pulse"
-    />,
-    <div
-      key={5}
-      className="bg-neutral-200/60 hover:bg-neutral-200/90 text-neutral-900/80 w-16 h-6 rounded-md text-sm animate-pulse"
-    />,
-  ];
 
   return (
     <div>

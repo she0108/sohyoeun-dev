@@ -16,45 +16,54 @@ export async function POST(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;
 
     const size = searchParams.get("size");
-
     const query = searchParams.get("query");
-    const filter = query
-      ? {
-          and: [
-            {
-              property: "분류",
-              status: {
-                equals: "post",
-              },
+    const tag = searchParams.get("tag");
+
+    let filter: any = {
+      property: "분류",
+      status: {
+        equals: "post",
+      },
+    };
+
+    if (query) {
+      filter = {
+        and: [
+          filter,
+          {
+            property: "제목",
+            rich_text: {
+              contains: query,
             },
-            {
-              property: "제목",
-              rich_text: {
-                contains: query,
-              },
-            },
-          ],
-        }
-      : {
-          property: "분류",
-          status: {
-            equals: "post",
           },
-        };
+        ],
+      };
+    }
+
+    if (tag) {
+      filter = {
+        and: [
+          filter,
+          {
+            property: "태그",
+            multi_select: {
+              contains: tag,
+            },
+          },
+        ],
+      };
+    }
 
     const start = searchParams.get("start");
     const startCursor = !start || start == "null" ? undefined : start;
-    const { results, next_cursor } = await notion.databases.query({
+    const { results, next_cursor: nextCursor } = await notion.databases.query({
       database_id: databaseId,
       page_size: size ? parseInt(size) : 5,
       filter: filter,
       start_cursor: startCursor,
     });
 
-    const nextCursor = next_cursor;
-
     const pages = results as PageObject[];
-
     const posts = pages.map((post) => ({
       id: post.id,
       date: post.created_time,

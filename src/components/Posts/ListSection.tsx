@@ -7,22 +7,23 @@ import { TagColor } from "@/types/notion-color";
 import { formatDate } from "@/lib/utils";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import useTagStore from "@/store/tagStore";
 
 function ListSection() {
   const [posts, setPosts] = useState<React.ReactElement[]>([]);
   const [nextCursor, setNextCursor] = useState<string | null>(null);
+  const { tag } = useTagStore();
   const searchParams = useSearchParams();
   const query = searchParams.get("query");
 
+  let url = `/api/database/posts?start=${nextCursor}`;
+  if (query) url = url + `&query=${query}`;
+  if (tag) url = url + `&tag=${tag.name}`;
+
   const fetchPosts = async (reset: boolean) => {
-    const response = await fetch(
-      query
-        ? `/api/database/posts?query=${query}&start=${nextCursor}`
-        : `/api/database/posts?start=${nextCursor}`,
-      {
-        method: "POST",
-      }
-    );
+    const response = await fetch(url, {
+      method: "POST",
+    });
 
     const json = await response.json();
 
@@ -66,7 +67,7 @@ function ListSection() {
 
   useEffect(() => {
     fetchPosts(true);
-  }, [query]);
+  }, [query, tag]);
 
   return (
     <div className="flex flex-col">
