@@ -10,8 +10,8 @@ interface ProjectContainerProps {
 function ProjectContainer({ project }: ProjectContainerProps) {
   return (
     <Link href={`/projects/${project.id}`}>
-      <div className="w-full h-64 bg-neutral-100 rounded-3xl flex flex-col overflow-hidden">
-        <div className="w-full h-36 rounded-t-3xl relative">
+      <div className="w-full h-auto bg-neutral-100 rounded-3xl flex flex-col overflow-hidden">
+        <div className="w-full h-48 rounded-t-3xl relative">
           <Image
             src={project.thumbnail}
             alt="project thumbnail"
@@ -23,16 +23,22 @@ function ProjectContainer({ project }: ProjectContainerProps) {
         <h4 className="text-base font-normal text-neutral-500 mx-6 whitespace-pre">
           {project.description1}
         </h4>
-        <h5 className="text-xs font-light text-neutral-400 mx-6 mt-2 whitespace-pre">
-          {project.description2}
-        </h5>
-        {/* <div className="mx-6 mt-1">
-      {project.tags.map((tag: { name: string; color: TagColor }) => (
-        <Tag key={tag.name} color={tag.color}>
-          {tag.name}
-        </Tag>
-      ))}
-    </div> */}
+
+        <div className="mx-6 mt-2 mb-5 flex flex-wrap gap-2">
+          {project.skills.map((skill: { name: string; color: TagColor }) => (
+            <Tag key={skill.name} color={skill.color}>
+              {skill.name}
+            </Tag>
+          ))}
+          {project.tags.map((tag: { name: string; color: TagColor }) => (
+            <Tag key={tag.name} color={tag.color}>
+              {tag.name}
+            </Tag>
+          ))}
+        </div>
+        {/* <h5 className="text-xs font-light text-neutral-400 mx-6 mt-2 whitespace-pre">
+      {project.description2}
+    </h5> */}
       </div>
     </Link>
   );

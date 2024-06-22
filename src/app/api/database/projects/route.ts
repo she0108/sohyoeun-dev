@@ -42,6 +42,7 @@ export async function POST(request: NextRequest) {
       description1: project.properties.소개1.rich_text[0].plain_text,
       description2: project.properties.소개2.rich_text[0].plain_text,
       tags: project.properties.태그.multi_select,
+      skills: project.properties.기술.multi_select,
       thumbnail: project.properties.썸네일.files[0].file.url,
     }));
 

@@ -112,6 +112,15 @@ export type ProjectPropsObject = {
       color: TagColor;
     }[];
   };
+  기술: {
+    id: string;
+    type: "mutli_select";
+    multi_select: {
+      id: string;
+      name: string;
+      color: TagColor;
+    }[];
+  };
   이름: { id: "title"; type: "title"; title: [{ plain_text: string }] };
   소개1: {
     id: string;

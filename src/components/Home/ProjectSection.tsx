@@ -10,7 +10,7 @@ function ProjectSection() {
 
   useEffect(() => {
     const fetchProjects = async () => {
-      const response = await fetch("/api/database/projects?size=2", {
+      const response = await fetch("/api/database/projects?size=3", {
         method: "POST",
         cache: "force-cache",
         next: { revalidate: 3600 },
