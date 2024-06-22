@@ -76,11 +76,19 @@ export default function ParagraphBlock({ children }: ParagraphBlockProps) {
     }
     let className = `${bold} ${italic} ${strikethrough} ${underline} ${color} whitespace-pre-wrap rounded-sm`;
     if (annotations.code) {
-      className += " bg-neutral-100 text-neutral-700 rounded-lg px-1 -mx-1";
+      className +=
+        " bg-neutral-200 text-neutral-700 text-base rounded-[5px] px-1 mx-0.5";
       block.push(
         <code key={text.plain_text} className={className}>
           {text.plain_text}
         </code>
+      );
+    } else if (text.href) {
+      let className = "text-neutral-400 underline whitespace-pre-wrap";
+      block.push(
+        <a key={text.plain_text} href={text.href} className={className}>
+          {text.plain_text}
+        </a>
       );
     } else {
       block.push(
