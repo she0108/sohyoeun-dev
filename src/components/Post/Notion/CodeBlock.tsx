@@ -16,7 +16,7 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ children }) => {
     plainText += text.plain_text;
   }
 
-  const language = children.code.language;
+  const language = children.code.language.toLowerCase().replace(" ", "");
 
   const className = `language-${language} rounded-xl`;
 
